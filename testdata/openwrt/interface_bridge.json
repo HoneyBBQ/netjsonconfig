@@ -1,0 +1,35 @@
+{
+  "general": {
+    "hostname": "test-system"
+  },
+  "interfaces": [
+    {
+      "name": "lan",
+      "type": "bridge",
+      "proto": "static",
+      "mtu": 1500,
+      "bridge_members": [
+        "eth0",
+        "eth1"
+      ],
+      "addresses": [
+        {
+          "proto": "static",
+          "family": "ipv4",
+          "address": "192.168.10.1",
+          "mask": 24,
+          "gateway": "192.168.10.254"
+        }
+      ]
+    }
+  ],
+  "ntp": {
+    "enabled": true,
+    "enable_server": false,
+    "servers": [
+      "0.pool.ntp.org",
+      "1.pool.ntp.org"
+    ]
+  }
+}
+

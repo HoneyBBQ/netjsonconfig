@@ -1,0 +1,23 @@
+{
+  "interfaces": [
+    {
+      "name": "wg0",
+      "type": "wireguard",
+      "mtu": 1420,
+      "no_host_route": false,
+      "addresses": [
+        {
+          "proto": "static",
+          "family": "ipv4",
+          "address": "10.0.0.3",
+          "mask": 24
+        }
+      ],
+      "wireguard": {
+        "private_key": "sGQitlaWF8LJjmNJOPoQkm9BVAtMtdfwpFT6zLSixlQ=",
+        "listen_port": 51820
+      }
+    }
+  ]
+}
+

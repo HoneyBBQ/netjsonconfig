@@ -1,0 +1,65 @@
+{
+  "openvpn": [
+    {
+      "name": "test-server",
+      "auth": "SHA1",
+      "auth_nocache": true,
+      "ca": "ca.pem",
+      "cert": "cert.pem",
+      "cipher": "AES-128-GCM",
+      "client_cert_not_required": false,
+      "client_to_client": false,
+      "comp_lzo": "adaptive",
+      "crl_verify": "crl.pem",
+      "data_ciphers": [
+        { "cipher": "AES-256-GCM", "optional": false },
+        { "cipher": "AES-128-GCM", "optional": false },
+        { "cipher": "CHACHA20-POLY1305", "optional": true }
+      ],
+      "data_ciphers_fallback": "AES-128-GCM",
+      "dev": "tap0",
+      "dev_type": "tap",
+      "dh": "dh.pem",
+      "duplicate_cn": true,
+      "engine": "rsax",
+      "fast_io": true,
+      "fragment": 0,
+      "group": "nogroup",
+      "keepalive": "20 60",
+      "key": "key.pem",
+      "log": "/var/log/openvpn.log",
+      "mode": "server",
+      "mssfix": 1450,
+      "mtu_disc": "no",
+      "mtu_test": false,
+      "mute": 0,
+      "mute_replay_warnings": true,
+      "persist_key": true,
+      "persist_tun": true,
+      "port": 1194,
+      "proto": "udp",
+      "remote": [
+        { "host": "vpn.example.com", "port": 443, "proto": "tcp" },
+        { "host": "vpn.example.org", "port": 1194 }
+      ],
+      "script_security": 0,
+      "server_bridge": "",
+      "status": "/var/log/openvpn.status 10",
+      "status_version": 1,
+      "tls_auth": "tls_auth.key 0",
+      "tls_server": true,
+      "tun_ipv6": false,
+      "up_delay": 0,
+      "user": "nobody",
+      "verb": 3
+    }
+  ],
+  "files": [
+    {
+      "path": "/etc/openvpn/ca.pem",
+      "mode": "0600",
+      "contents": "-----BEGIN-----"
+    }
+  ]
+}
+

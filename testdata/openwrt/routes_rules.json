@@ -1,0 +1,71 @@
+{
+  "general": {
+    "hostname": "routes-host",
+    "ula_prefix": "fd8e:f40a:6701::/48",
+    "globals_id": "custom_globals"
+  },
+  "routes": [
+    {
+      "device": "eth1",
+      "destination": "192.168.3.1/24",
+      "next": "192.168.2.1",
+      "cost": 0
+    },
+    {
+      "device": "eth1",
+      "destination": "192.168.4.1/24",
+      "next": "192.168.2.2",
+      "cost": 2,
+      "source": "192.168.1.10",
+      "table": "2",
+      "onlink": true,
+      "mtu": "1450",
+      "type": "unicast"
+    },
+    {
+      "name": "route3",
+      "device": "eth1",
+      "destination": "fd89::1/128",
+      "next": "fd88::1",
+      "cost": 0
+    },
+    {
+      "device": "eth1",
+      "destination": "fd90::1/128",
+      "next": "fd88::2",
+      "cost": 3,
+      "source": "fd87::10"
+    }
+  ],
+  "ip_rules": [
+    {
+      "name": "rule1",
+      "in": "eth0",
+      "out": "eth1",
+      "src": "192.168.1.0/24",
+      "dest": "192.168.2.0/24",
+      "tos": 2,
+      "mark": "0x0/0x1",
+      "lookup": "0",
+      "action": "blackhole",
+      "invert": true
+    },
+    {
+      "src": "192.168.1.0/24",
+      "dest": "192.168.3.0/24",
+      "goto": 0
+    },
+    {
+      "name": "arbitrary_rule6",
+      "in": "vpn",
+      "dest": "fdca:1234::/64",
+      "action": "prohibit"
+    },
+    {
+      "in": "vpn",
+      "src": "fdca:1235::/64",
+      "action": "prohibit"
+    }
+  ]
+}
+

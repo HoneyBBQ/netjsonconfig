@@ -1,0 +1,5 @@
+package system
+
+config system 'system'
+	option hostname 'test-system'
+

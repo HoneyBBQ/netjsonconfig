@@ -1,0 +1,22 @@
+package network
+
+config interface 'lan'
+	option device 'lan'
+	option dns '8.8.8.8 1.1.1.1'
+	option dns_search 'example.com'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option proto 'static'
+
+package openvpn
+
+config openvpn 'test_vpn'
+	option ca '/etc/openvpn/ca.crt'
+	option cert '/etc/openvpn/server.crt'
+	option dev 'tun0'
+	option dh '/etc/openvpn/dh.pem'
+	option enabled '1'
+	option key '/etc/openvpn/server.key'
+	option mode 'server'
+	option port '1194'
+	option proto 'udp'

@@ -1,0 +1,35 @@
+{
+  "general": {
+    "hostname": "wireless-host"
+  },
+  "radios": [
+    {
+      "name": "radio0",
+      "protocol": "802.11n",
+      "band": "2g",
+      "channel": 11,
+      "htmode": "HT20",
+      "tx_power": 20
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "mesh0",
+      "type": "wireless",
+      "wireless": {
+        "radio": "radio0",
+        "mode": "access_point",
+        "ssid": "Mesh AP",
+        "network": [
+          "lan"
+        ],
+        "hidden": false,
+        "encryption": {
+          "protocol": "wpa2_personal",
+          "key": "meshApTesting1234"
+        }
+      }
+    }
+  ]
+}
+

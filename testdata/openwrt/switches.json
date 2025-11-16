@@ -1,0 +1,35 @@
+{
+  "general": {
+    "hostname": "switch-host"
+  },
+  "switches": [
+    {
+      "name": "switch0",
+      "reset": true,
+      "enable_vlan": true,
+      "vlans": [
+        {
+          "device": "switch0",
+          "vlan_id": 1,
+          "ports": "0t 2 3 4 5"
+        },
+        {
+          "device": "switch0",
+          "vlan_id": 2,
+          "ports": "0t 1"
+        }
+      ]
+    },
+    {
+      "name": "switch1",
+      "vlans": [
+        {
+          "device": "switch1",
+          "vlan_id": 1,
+          "ports": "0t 2 3"
+        }
+      ]
+    }
+  ]
+}
+

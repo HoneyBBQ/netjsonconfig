@@ -1,0 +1,52 @@
+{
+  "general": {
+    "hostname": "owrt-demo",
+    "timezone": "UTC",
+    "zonename": "UTC",
+    "maintainer": "ops@example.com",
+    "description": "demo config",
+    "notes": "unit test",
+    "buffer_size_kb": 256,
+    "console_log_level": 6,
+    "cron_log_level": 5,
+    "kernel_console_log_level": 7,
+    "log_buffer_size_kb": 128,
+    "log_file": "/tmp/system.log",
+    "log_hostname": "log-host",
+    "log_ip": "192.0.2.10",
+    "log_port": 1514,
+    "log_prefix": "demo",
+    "log_protocol": "udp",
+    "log_remote": true,
+    "log_size_kb": 64,
+    "log_trailer_null": true,
+    "log_type": "circular",
+    "tty_login_required": true,
+    "urandom_seed_enabled": true,
+    "zram_compression": "zstd",
+    "zram_size_mb": 32
+  },
+  "ntp": {
+    "enabled": true,
+    "enable_server": true,
+    "servers": ["0.pool.ntp.org", "1.pool.ntp.org"],
+    "hostname": "ntp.local",
+    "port": 123,
+    "pools": ["pool.ntp.org"]
+  },
+  "leds": [
+    {
+      "name": "led-usb",
+      "sysfs": "tp-link:blue:usb",
+      "trigger": "usb",
+      "default": true,
+      "delayoff": 100,
+      "delayon": 200,
+      "dev": "usb0",
+      "interval": 50,
+      "message": "usb",
+      "mode": "link"
+    }
+  ]
+}
+

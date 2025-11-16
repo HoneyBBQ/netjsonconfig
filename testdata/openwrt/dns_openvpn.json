@@ -1,0 +1,40 @@
+{
+  "dns_servers": ["8.8.8.8", "1.1.1.1"],
+  "dns_search": ["example.com"],
+  "interfaces": [
+    {
+      "name": "lan",
+      "type": "ethernet",
+      "proto": "static",
+      "addresses": [
+        {
+          "family": "ipv4",
+          "proto": "static",
+          "address": "192.168.1.1",
+          "mask": 24
+        }
+      ]
+    }
+  ],
+  "openvpn": [
+    {
+      "name": "test_vpn",
+      "ca": "/etc/openvpn/ca.crt",
+      "cert": "/etc/openvpn/server.crt",
+      "key": "/etc/openvpn/server.key",
+      "dh": "/etc/openvpn/dh.pem",
+      "proto": "udp",
+      "port": 1194,
+      "dev": "tun0",
+      "mode": "server"
+    }
+  ],
+  "files": [
+    {
+      "path": "/etc/config/custom",
+      "mode": "0644",
+      "contents": "test content\n"
+    }
+  ]
+}
+

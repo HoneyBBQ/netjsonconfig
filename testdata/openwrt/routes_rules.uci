@@ -1,0 +1,68 @@
+package system
+
+config system 'system'
+	option hostname 'routes-host'
+
+package network
+
+config globals 'custom_globals'
+	option ula_prefix 'fd8e:f40a:6701::/48'
+
+config route 'route1'
+	option gateway '192.168.2.1'
+	option interface 'eth1'
+	option metric '0'
+	option netmask '255.255.255.0'
+	option target '192.168.3.1'
+
+config route 'route2'
+	option gateway '192.168.2.2'
+	option interface 'eth1'
+	option metric '2'
+	option mtu '1450'
+	option netmask '255.255.255.0'
+	option onlink '1'
+	option source '192.168.1.10'
+	option table '2'
+	option target '192.168.4.1'
+	option type 'unicast'
+
+config route6 'route3'
+	option gateway 'fd88::1'
+	option interface 'eth1'
+	option metric '0'
+	option target 'fd89::1/128'
+
+config route6 'route4'
+	option gateway 'fd88::2'
+	option interface 'eth1'
+	option metric '3'
+	option source 'fd87::10'
+	option target 'fd90::1/128'
+
+config rule 'rule1'
+	option action 'blackhole'
+	option dest '192.168.2.0/24'
+	option in 'eth0'
+	option invert '1'
+	option lookup '0'
+	option mark '0x0/0x1'
+	option out 'eth1'
+	option src '192.168.1.0/24'
+	option tos '2'
+
+config rule 'rule2'
+	option dest '192.168.3.0/24'
+	option goto '0'
+	option src '192.168.1.0/24'
+
+config rule6 'arbitrary_rule6'
+	option action 'prohibit'
+	option dest 'fdca:1234::/64'
+	option in 'vpn'
+
+config rule6 'rule4'
+	option action 'prohibit'
+	option in 'vpn'
+	option src 'fdca:1235::/64'
+

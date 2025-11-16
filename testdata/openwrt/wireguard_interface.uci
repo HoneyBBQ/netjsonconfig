@@ -1,0 +1,11 @@
+package network
+
+config interface 'wg0'
+	option listen_port '51820'
+	option mtu '1420'
+	option nohostroute '0'
+	option private_key 'sGQitlaWF8LJjmNJOPoQkm9BVAtMtdfwpFT6zLSixlQ='
+	option proto 'wireguard'
+	option type 'wireguard'
+	list addresses '10.0.0.3/24'
+

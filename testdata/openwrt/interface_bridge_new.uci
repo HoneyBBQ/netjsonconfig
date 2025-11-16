@@ -1,0 +1,2 @@
+error: decode netjson: proto: syntax error (line 1:1): unexpected token 
+exit status 1

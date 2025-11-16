@@ -1,0 +1,33 @@
+{
+  "vxlan": [
+    {
+      "name": "vxlan1",
+      "auto_vni": false,
+      "vni": 10
+    }
+  ],
+  "wireguard": [
+    {
+      "name": "wg-vxlan",
+      "private_key": "QFdbnuYr7rrF4eONCAs7FhZwP7BXX/jD/jq2LXCpaXI=",
+      "port": 40842,
+      "address": "10.10.0.1/24",
+      "peers": [
+        {
+          "public_key": "jqHs76yCH0wThMSqogDshndAiXelfffUJVcFmz352HI=",
+          "allowed_ips": "10.10.0.2/32",
+          "endpoint_host": "192.168.50.10",
+          "endpoint_port": 51820
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "/etc/vxlan/wg.key",
+      "mode": "0600",
+      "contents": "WGKEY-VXLAN"
+    }
+  ]
+}
+

@@ -1,0 +1,27 @@
+package system
+
+config system 'system'
+	option hostname 'test-system'
+
+config led 'led_usb1'
+	option dev '1-1.1'
+	option interval '50'
+	option name 'USB1'
+	option sysfs 'tp-link:green:usb1'
+	option trigger 'usbdev'
+
+config led 'led_wlan2g'
+	option default '0'
+	option delayoff '1'
+	option delayon '5'
+	option name 'WLAN2G'
+	option sysfs 'tp-link:blue:wlan2g'
+	option trigger 'phy0tpt'
+
+config led 'led_usb2'
+	option dev '1-1.2'
+	option interval '50'
+	option name 'USB2'
+	option sysfs 'tp-link:blue:usb2'
+	option trigger 'usbdev'
+

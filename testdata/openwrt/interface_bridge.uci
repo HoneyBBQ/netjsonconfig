@@ -1,0 +1,27 @@
+package system
+
+config system 'system'
+	option hostname 'test-system'
+
+config timeserver 'ntp'
+	option enable_server '0'
+	option enabled '1'
+	list servers '0.pool.ntp.org'
+	list servers '1.pool.ntp.org'
+
+package network
+
+config device 'device_lan'
+	option mtu '1500'
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0'
+	list ports 'eth1'
+
+config interface 'lan'
+	option device 'br-lan'
+	option gateway '192.168.10.254'
+	option ipaddr '192.168.10.1'
+	option netmask '255.255.255.0'
+	option proto 'static'
+

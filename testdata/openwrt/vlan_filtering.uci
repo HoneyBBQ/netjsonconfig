@@ -1,0 +1,40 @@
+package system
+
+config system 'system'
+	option hostname 'vlan-test'
+
+package network
+
+config device 'device_lan'
+	option name 'br-lan'
+	list ports 'eth0'
+	list ports 'eth1'
+	option type 'bridge'
+	option vlan_filtering '1'
+
+config bridge-vlan 'vlan_lan_10'
+	option device 'br-lan'
+	list ports 'eth0:t'
+	list ports 'eth1:u*'
+	option vlan '10'
+
+config bridge-vlan 'vlan_lan_20'
+	option device 'br-lan'
+	list ports 'eth0:t'
+	option vlan '20'
+
+config interface 'lan_10'
+	option device 'br-lan.10'
+	option proto 'none'
+
+config interface 'lan_20'
+	option device 'br-lan.20'
+	option proto 'none'
+
+config interface 'lan'
+	option device 'br-lan'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option proto 'static'
+
+

@@ -1,0 +1,47 @@
+{
+  "general": {
+    "hostname": "vlan-test"
+  },
+  "interfaces": [
+    {
+      "name": "lan",
+      "type": "bridge",
+      "bridge_members": ["eth0", "eth1"],
+      "proto": "static",
+      "addresses": [
+        {
+          "family": "ipv4",
+          "proto": "static",
+          "address": "192.168.1.1",
+          "mask": 24
+        }
+      ],
+      "vlan_filtering": [
+        {
+          "vlan": 10,
+          "ports": [
+            {
+              "ifname": "eth0",
+              "tagging": "t"
+            },
+            {
+              "ifname": "eth1",
+              "tagging": "u",
+              "primary_vid": true
+            }
+          ]
+        },
+        {
+          "vlan": 20,
+          "ports": [
+            {
+              "ifname": "eth0",
+              "tagging": "t"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

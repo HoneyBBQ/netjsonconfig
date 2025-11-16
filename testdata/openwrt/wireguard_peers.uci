@@ -1,0 +1,11 @@
+package network
+
+config wireguard_wg0 'wgpeer_wg0'
+	option endpoint_host '192.168.1.42'
+	option endpoint_port '40840'
+	option persistent_keepalive '30'
+	option preshared_key 'oPZmGdHBseaV1TF0julyElNuJyeKs2Eo+o62R/09IB4='
+	option public_key 'rn+isMBpyQ4HX6ZzE709bKnZw5IaLZoIS3hIjmfKCkk='
+	option route_allowed_ips '1'
+	list allowed_ips '10.0.0.1/32'
+

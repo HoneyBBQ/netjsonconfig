@@ -1,0 +1,46 @@
+{
+  "wireguard": [
+    {
+      "name": "test1",
+      "private_key": "QFdbnuYr7rrF4eONCAs7FhZwP7BXX/jD/jq2LXCpaXI=",
+      "port": 40842,
+      "address": "10.0.0.1/24",
+      "dns": ["10.0.0.1"],
+      "table": "auto",
+      "mtu": 1500,
+      "save_config": true,
+      "post_up": "ip rule add ipproto tcp dport 22 table 1234",
+      "pre_down": "ip rule delete ipproto tcp dport 22 table 1234",
+      "peers": [
+        {
+          "public_key": "jqHs76yCH0wThMSqogDshndAiXelfffUJVcFmz352HI=",
+          "allowed_ips": "10.0.0.3/32"
+        },
+        {
+          "public_key": "94a+MnZSdzHCzOy5y2K+0+Xe7lQzaa4v7lEiBZ7elVE=",
+          "allowed_ips": "10.0.0.4/32",
+          "preshared_key": "xisFXck9KfEZga4hlkproH6+86S8ki1tmLtMtqVipjg=",
+          "endpoint_host": "192.168.1.35",
+          "endpoint_port": 4908
+        }
+      ]
+    },
+    {
+      "name": "test2",
+      "private_key": "AFdbnuYr7rrF4eONCAs7FhZwP7BXX/jD/jq2LXCpaXI=",
+      "port": 40843,
+      "mtu": 1280,
+      "address": "10.0.1.1/24",
+      "dns": ["10.0.1.1", "10.0.0.1"],
+      "table": "1234"
+    }
+  ],
+  "files": [
+    {
+      "path": "/etc/wireguard/wg.key",
+      "mode": "0600",
+      "contents": "WGKEY"
+    }
+  ]
+}
+

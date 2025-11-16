@@ -1,0 +1,24 @@
+package system
+
+config system 'system'
+	option hostname 'wireless-host'
+
+package wireless
+
+config wifi-device 'radio0'
+	option band '2g'
+	option channel '11'
+	option htmode 'HT20'
+	option txpower '20'
+	option type 'mac80211'
+
+config wifi-iface 'wifi_mesh0'
+	option device 'radio0'
+	option encryption 'psk2'
+	option hidden '0'
+	option ifname 'mesh0'
+	option key 'meshApTesting1234'
+	option mode 'ap'
+	option network 'lan'
+	option ssid 'Mesh AP'
+
