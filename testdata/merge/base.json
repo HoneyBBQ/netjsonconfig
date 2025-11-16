@@ -1,0 +1,16 @@
+{
+    "dns_servers": [
+        "8.8.8.8",
+        "1.1.1.1"
+    ],
+    "dns_search": [
+        "example.com"
+    ],
+    "ntp": {
+        "enabled": true,
+        "servers": [
+            "0.pool.ntp.org",
+            "1.pool.ntp.org"
+        ]
+    }
+}

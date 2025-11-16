@@ -39,6 +39,7 @@ func main() {
 		mode         = flag.String("mode", "render", "operation mode: render | parse")
 		backendName  = flag.String("backend", "", "backend name (openwrt|openvpn|wireguard|vxlan)")
 		inputPath    = flag.String("input", "", "input path (default: stdin)")
+		configPaths  = flag.String("configs", "", "comma-separated config files to merge (first has lowest priority)")
 		outputPath   = flag.String("output", "", "output path (default: stdout)")
 		filesOutDir  = flag.String("files-dir", "", "directory for additional files (render mode)")
 		prettyJSON   = flag.Bool("pretty", true, "pretty print JSON in parse mode")
@@ -64,10 +65,12 @@ func main() {
 	ctx := context.Background()
 	switch strings.ToLower(*mode) {
 	case "render":
-		payload, err := readInput(*inputPath)
+		// 加载并合并配置
+		payload, err := loadAndMergeConfigs(*inputPath, *configPaths)
 		if err != nil {
-			exitWithError(fmt.Errorf("read input: %w", err))
+			exitWithError(fmt.Errorf("load configs: %w", err))
 		}
+
 		message := entry.newMessage()
 		unmarshal := protojson.UnmarshalOptions{
 			DiscardUnknown: false,
@@ -166,6 +169,63 @@ func readInput(path string) ([]byte, error) {
 		return io.ReadAll(os.Stdin)
 	}
 	return os.ReadFile(path)
+}
+
+// loadAndMergeConfigs 加载并合并多个配置文件。
+// 支持两种方式：
+// 1. 使用 -configs 参数指定多个文件（逗号分隔）
+// 2. 使用 -input 参数指定单个文件
+// 如果两者都提供，configs 的优先级最低，input 最高。
+func loadAndMergeConfigs(inputPath, configPaths string) ([]byte, error) {
+	var configFiles []string
+
+	// 解析 configs 参数（逗号分隔）
+	if configPaths != "" {
+		parts := strings.Split(configPaths, ",")
+		for _, p := range parts {
+			p = strings.TrimSpace(p)
+			if p != "" {
+				configFiles = append(configFiles, p)
+			}
+		}
+	}
+
+	// 添加 input 参数（如果提供）
+	if inputPath != "" && inputPath != "-" {
+		configFiles = append(configFiles, inputPath)
+	}
+
+	// 如果没有文件，从 stdin 读取
+	if len(configFiles) == 0 {
+		data, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			return nil, fmt.Errorf("read stdin: %w", err)
+		}
+		return data, nil
+	}
+
+	// 如果只有一个文件，直接读取
+	if len(configFiles) == 1 {
+		return os.ReadFile(configFiles[0])
+	}
+
+	// 多个文件：加载并合并
+	var configs [][]byte
+	for _, path := range configFiles {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return nil, fmt.Errorf("read %q: %w", path, err)
+		}
+		configs = append(configs, data)
+	}
+
+	// 使用核心层的合并功能
+	merged, err := netjsonconfig.MergeJSON(configs, netjsonconfig.DefaultIdentifiers)
+	if err != nil {
+		return nil, fmt.Errorf("merge configs: %w", err)
+	}
+
+	return merged, nil
 }
 
 func writeOutput(path string, data []byte) error {

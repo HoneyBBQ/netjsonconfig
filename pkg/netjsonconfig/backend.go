@@ -6,12 +6,17 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// Backend 定义双向转换接口，所有协议实现都必须遵循。
+// Backend defines the bidirectional conversion interface that all protocol implementations must follow.
+// Each backend is responsible for converting between NetJSON (proto.Message) and its native DSL format.
 type Backend interface {
-	// Name 返回 backend 标识，如 "openwrt"、"openvpn"。
+	// Name returns the backend identifier (e.g., "openwrt", "openvpn", "wireguard").
 	Name() string
-	// ToNative 将 NetJSON proto 渲染为目标 DSL。
+	
+	// ToNative renders a NetJSON proto message to native DSL format.
+	// This is the forward conversion: NetJSON → UCI/OpenVPN/WireGuard config files.
 	ToNative(ctx context.Context, cfg proto.Message, opts RenderOptions) (*Bundle, error)
-	// ToNetJSON 将原生 DSL 解析回 NetJSON proto。
+	
+	// ToNetJSON parses native DSL back to NetJSON proto message.
+	// This is the reverse conversion: UCI/OpenVPN/WireGuard → NetJSON.
 	ToNetJSON(ctx context.Context, bundle *Bundle, opts ParseOptions) (proto.Message, error)
 }

@@ -2,36 +2,39 @@ package netjsonconfig
 
 import "time"
 
-// RenderMode 控制 DSL 渲染策略（如 OpenWrt DSA/legacy）。
+// RenderMode controls the DSL rendering strategy.
+// Some backends (like OpenWrt) support multiple syntax versions.
 type RenderMode int
 
 const (
-	// RenderModeAuto 根据输入自动推断。
+	// RenderModeAuto automatically detects the appropriate syntax from input.
 	RenderModeAuto RenderMode = iota
-	// RenderModeDSA 强制 DSA 语法。
+	
+	// RenderModeDSA forces DSA (Distributed Switch Architecture) syntax for OpenWrt >= 21.
 	RenderModeDSA
-	// RenderModeLegacy 强制 legacy 语法。
+	
+	// RenderModeLegacy forces legacy syntax for OpenWrt <= 19.
 	RenderModeLegacy
 )
 
-// RenderOptions 控制前向渲染过程。
+// RenderOptions controls the forward rendering process (NetJSON → DSL).
 type RenderOptions struct {
-	Mode             RenderMode
-	TemplateContext  map[string]any
-	Strict           bool
-	SkipValidation   bool
-	GenerationTag    string
-	Timeout          time.Duration
-	IncludeAuxiliary bool
+	Mode             RenderMode     // Syntax mode selection
+	TemplateContext  map[string]any // Variables for template evaluation
+	Strict           bool           // Fail on any warnings if true
+	SkipValidation   bool           // Skip schema validation if true
+	GenerationTag    string         // Optional tag to include in generated files
+	Timeout          time.Duration  // Maximum time allowed for rendering
+	IncludeAuxiliary bool           // Whether to include auxiliary files in output
 }
 
-// ParseOptions 控制反向解析。
+// ParseOptions controls the reverse parsing process (DSL → NetJSON).
 type ParseOptions struct {
-	Mode           RenderMode
-	AllowUnknown   bool
-	AssumeTemplate bool
-	SkipValidation bool
-	Timeout        time.Duration
-	SourceMetadata map[string]string
-	BestEffort     bool
+	Mode           RenderMode            // Expected syntax mode
+	AllowUnknown   bool                  // Allow unknown fields in input
+	AssumeTemplate bool                  // Treat input as template (preserve variables)
+	SkipValidation bool                  // Skip schema validation if true
+	Timeout        time.Duration         // Maximum time allowed for parsing
+	SourceMetadata map[string]string     // Metadata about the source (version, origin, etc.)
+	BestEffort     bool                  // Continue parsing on non-fatal errors
 }

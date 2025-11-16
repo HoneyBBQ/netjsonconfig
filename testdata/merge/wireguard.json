@@ -1,0 +1,21 @@
+{
+  "interfaces": [
+    {
+      "name": "wg0",
+      "type": "wireguard",
+      "wireguard": {
+        "private_key": "QFdbnuYr7rrF4eONCAs7FhZwP7BXX/jD/jq2LXCpaXI=",
+        "listen_port": 51820
+      },
+      "addresses": [
+        {
+          "proto": "static",
+          "family": "ipv4",
+          "address": "10.0.0.1",
+          "mask": 24
+        }
+      ]
+    }
+  ]
+}
+

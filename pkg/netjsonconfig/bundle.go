@@ -5,36 +5,43 @@ import (
 	"time"
 )
 
-// Package 表示单个配置包（如 UCI 的 system/network/wireless）。
+// Package represents a single configuration package.
+// For UCI backends, each package corresponds to a file under /etc/config/
+// (e.g., "system", "network", "wireless").
+// For other backends, there's typically only one package containing the main config.
 type Package struct {
-	Name    string // 包名（如 "system", "network"）
-	Content []byte // 配置内容（不包含 "package" 声明行）
+	Name    string // Package name (e.g., "system", "network")
+	Content []byte // Configuration content (excluding "package" declaration line for UCI)
 }
 
-// File 表示附加文件（如证书、脚本等）。
+// File represents an additional file (certificates, scripts, keys, etc.)
+// that should be deployed alongside the main configuration.
 type File struct {
-	Path    string      // 文件路径
-	Content []byte      // 文件内容
-	Mode    fs.FileMode // 文件权限
+	Path    string      // Absolute file path where the file should be placed
+	Content []byte      // File content (binary-safe)
+	Mode    fs.FileMode // Unix file permissions (e.g., 0644, 0600)
 }
 
-// Metadata 存储配置生成的元信息。
+// Metadata stores information about how and when the configuration was generated.
 type Metadata struct {
-	Format    string            // 格式标识（"uci", "openvpn", "wireguard", "vxlan"）
-	Backend   string            // 后端名称
-	Generated time.Time         // 生成时间
-	Version   string            // 版本号
-	Custom    map[string]string // 自定义元数据
+	Format    string            // Format identifier ("uci", "openvpn", "wireguard", "vxlan")
+	Backend   string            // Backend name that generated this bundle
+	Generated time.Time         // Timestamp when the bundle was created
+	Version   string            // Optional version tag
+	Custom    map[string]string // Extensible metadata for backend-specific information
 }
 
-// Bundle 表示完整的配置输出。
+// Bundle represents the complete output of a configuration render operation.
+// It contains one or more configuration packages, optional additional files,
+// and metadata about the generation process.
 type Bundle struct {
-	Packages []Package  // 配置包列表
-	Files    []File     // 附加文件列表
-	Metadata Metadata   // 元信息
+	Packages []Package // Configuration packages (one or more depending on backend)
+	Files    []File    // Additional files to be deployed (certificates, keys, scripts)
+	Metadata Metadata  // Generation metadata
 }
 
-// NewBundle 创建一个空的 Bundle。
+// NewBundle creates an empty Bundle with initialized metadata.
+// The Generated timestamp is set to the current time.
 func NewBundle(format, backend string) *Bundle {
 	return &Bundle{
 		Packages: make([]Package, 0),
@@ -48,9 +55,10 @@ func NewBundle(format, backend string) *Bundle {
 	}
 }
 
-// NativeBundle 已废弃，使用 Bundle 代替。
-// 为了向后兼容保留此类型别名。
+// NativeBundle is deprecated. Use Bundle instead.
+// Kept for backward compatibility.
 type NativeBundle = Bundle
 
-// AdditionalFile 已废弃，使用 File 代替。
+// AdditionalFile is deprecated. Use File instead.
+// Kept for backward compatibility.
 type AdditionalFile = File
